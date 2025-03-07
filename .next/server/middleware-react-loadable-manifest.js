@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"pages/index.js -> ../components/VentasChart\":{\"id\":\"pages/index.js -> ../components/VentasChart\",\"files\":[\"static/chunks/_pages-dir-browser_components_VentasChart_js.js\"]}}"

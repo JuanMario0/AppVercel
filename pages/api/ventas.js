@@ -6,12 +6,25 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
-  const { data, error } = await supabase
-    .from('ventas')
-    .select('mes, total')
-    .order('mes', { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from('ventas')
+      .select('mes, venta') // Cambiamos 'total' por 'venta'
+      .order('mes', { ascending: true });
 
-  if (error) return res.status(500).json({ error: error.message });
+    if (error) {
+      console.error('Supabase error:', error.message);
+      return res.status(500).json({ error: error.message });
+    }
 
-  res.status(200).json(data);
+    if (!data || data.length === 0) {
+      console.log('No data found in the ventas table');
+      return res.status(200).json([]); // Devuelve array vacío si no hay datos
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 }
